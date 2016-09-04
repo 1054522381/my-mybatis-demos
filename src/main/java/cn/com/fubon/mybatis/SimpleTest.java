@@ -113,7 +113,7 @@ public class SimpleTest {
 	 * 测试多对多，根据id获取group
 	 */
 	@Test
-	@Ignore
+//	@Ignore
 	public void testGetGroup(){
 		SqlSession session = sqlSessionFactory.openSession();
 		Group group = session.selectOne("getGroup", 1);

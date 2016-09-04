@@ -45,23 +45,24 @@
   </select>
   
   <!-- many to many
+   -->
   <resultMap type="cn.com.fubon.mybatis.domain.Group" id="GroupResultMap_1">
 	<result property="id" column="id" />
 	<result property="name" column="group_name" />
-	<collection property="persons" resultMap="PersonResultMap" ofType="cn.com.fubon.mybatis.domain.Person">
-		<id property="id" column="person_id" />
-		<result property="name" column="person_name" />
-		<result property="age" column="age" />
-		<association property="groups" resultMap="GroupResultMap_1"/>
+	<collection property="persons" ofType="cn.com.fubon.mybatis.domain.Person">
+	  <id property="id" column="person_id" javaType="Integer" jdbcType="INTEGER"/>    
+      <result property="name" column="person_name" javaType="String" jdbcType="VARCHAR"/>
+      <result property="age" column="age"/> 
 	</collection>
   </resultMap>
   <select id="getGroup" resultMap="GroupResultMap_1"
 	parameterType="Integer">
-	SELECT *
-	FROM `group`
-	WHERE id=#{id}
+	select a.id,a.name as group_name,b.person_id,c.name as person_name,c.age from `group` a join person_group b
+	on a.id=b.group_id
+	join person c
+	on b.person_id=c.id
+	where a.id=#{id}
   </select>
-   -->
    
   
 	<!-- 根据一个group_id,查看这个组下的所有person-->
